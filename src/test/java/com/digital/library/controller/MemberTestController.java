@@ -38,11 +38,11 @@ public class MemberTestController {
                         .subscription(Subscription.ACTIVE)
                         .build();
 
-    @Test
-    void addmember(){
-        Mockito.when(this.bookService.addmember(member)).thenReturn(member);
-        ResponseEntity<Member> response= memberController.addmember(member);
-        Assertions.assertEquals(HttpStatus.OK,response.getStatusCode());
-        Assertions.assertEquals(member,response.getBody());
-        }
+    // @Test
+    // void addmember(){
+    //     Mockito.when(this.bookService.addmember(member)).thenReturn(member);
+    //     // ResponseEntity<Member> response= memberController.addmember(member);
+    //     Assertions.assertEquals(HttpStatus.OK,response.getStatusCode());
+    //     Assertions.assertEquals(member,response.getBody());
+    //     }
 }

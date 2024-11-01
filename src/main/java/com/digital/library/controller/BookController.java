@@ -3,9 +3,6 @@ package com.digital.library.controller;
 import java.util.List;
 import java.util.UUID;
 
-// import org.hibernate.mapping.List;
-
-// import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,13 +15,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.digital.library.entity.Book;
 import com.digital.library.service.BookService;
+// import com.digital.library.service.RedisService;
 
 @RestController
 @RequestMapping("/book")
 public class BookController {
-
+  
     @Autowired
     public BookService bookService;
+
+    // @Autowired
+    // public RedisService redisService;
     
     @PostMapping("/add")
     public ResponseEntity<Book> addBook(@RequestBody Book book){
@@ -34,6 +35,9 @@ public class BookController {
     @GetMapping("/get-books")
     public ResponseEntity<List<Book>> getBook(){
         List<Book> book=this.bookService.getBook();
+// Use of redis for caching
+ // this.redisService.addtoCache("list",book);
+ // this.redisService.getCache("list");
         return ResponseEntity.ok(book);
     }
 

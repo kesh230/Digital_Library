@@ -31,6 +31,8 @@ public class Member {
     private String firstName;
     private String lastName;
     private Long mobileNo;
+    private String password;
+    private Role role;
 
     @Email
     private String email;
@@ -42,4 +44,5 @@ public class Member {
         ACTIVE,
         INACTIVE
     }
+
 }

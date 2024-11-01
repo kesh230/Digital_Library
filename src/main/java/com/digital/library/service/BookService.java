@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.digital.library.entity.Book;
@@ -21,13 +22,17 @@ public class BookService {
     
     @Autowired
     private final Book_repository book_repository;
+    
+    @Autowired
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     private final Member_repository member_repository;
 
-    public BookService(Book_repository book_repository, Member_repository member_repository) {
+    public BookService(Book_repository book_repository, Member_repository member_repository, PasswordEncoder passwordEncoder) {
         this.book_repository = book_repository;
         this.member_repository = member_repository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public Book addBook(Book book){
@@ -47,6 +52,7 @@ public class BookService {
         this.book_repository.deleteById(id);
     }
     public Member addmember(Member member){
+        member.setPassword(passwordEncoder.encode(member.getPassword()));
         return this.member_repository.save(member);
     }
     public List<Member> getMember(){
@@ -55,21 +61,22 @@ public class BookService {
     public void deleteMemberbyId(UUID id){
         this.member_repository.deleteById(id);
     }
-    public Member updateMember(Member member){
-        Member member1=this.member_repository.getMemberByEmail(member.getEmail());
-        member1.setFirstName(member.getFirstName());
-        member1.setLastName(member.getLastName());
-        member1.setEmail(member.getEmail());
-        member1.setMobileNo(member.getMobileNo());
-        member1.setSubscription(member.getSubscription());
+    // public Member updateMember(Member member){
+    //     Optional<Member> member1=this.member_repository.getMemberByEmail(member.getEmail());
+    //     member1.setFirstName(member.getFirstName());
+    //     member1.setLastName(member.getLastName());
+    //     member1.setEmail(member.getEmail());
+    //     member1.setMobileNo(member.getMobileNo());
+    //     member1.setSubscription(member.getSubscription());
+    //     member1.
 
-        // member1.builder().firstName(member.getFirstName())
-        //                  .lastName(member.getLastName())
-        //                  .email(member.getEmail())
-        //                  .mobileNo(member.getMobileNo())
-        //                  .Subscription(member.getSubscription()).build();
-        return this.member_repository.save(member1);
-    }
+    //     // member1.builder().firstName(member.getFirstName())
+    //     //                  .lastName(member.getLastName())
+    //     //                  .email(member.getEmail())
+    //     //                  .mobileNo(member.getMobileNo())
+    //     //                  .Subscription(member.getSubscription()).build();
+    //     return this.member_repository.save(member1);
+    // }
 
     public Member getMemberById(UUID memberid) {
         Optional<Member> member=this.member_repository.findById(memberid);

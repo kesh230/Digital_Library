@@ -24,21 +24,16 @@ public class MemberController {
     @Autowired
     private BookService bookService;
     
-    @PostMapping("/add")
-    public ResponseEntity<Member> addmember(@RequestBody Member member){
-        this.bookService.addmember(member);
-        return ResponseEntity.ok(member);
-    }
     @GetMapping("/get")
     public ResponseEntity<List<Member>> getMember(){
         List<Member> members=this.bookService.getMember();
         return ResponseEntity.ok(members);
     }
-    @PutMapping("/update")
-    public ResponseEntity<?> updateMember(@RequestBody Member member){
-        Member member1=this.bookService.updateMember(member);
-        return ResponseEntity.ok(member1);
-    }
+    // @PutMapping("/update")
+    // public ResponseEntity<?> updateMember(@RequestBody Member member){
+    //     Member member1=this.bookService.updateMember(member);
+    //     return ResponseEntity.ok(member1);
+    // }
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteMember(@PathVariable UUID id){
         this.bookService.deleteMemberbyId(id);

@@ -1,5 +1,6 @@
 package com.digital.library.repository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,6 +12,6 @@ import com.digital.library.entity.Member;
 
 @Repository
 public interface  Member_repository extends JpaRepository<Member,UUID> {
-    public Member getMemberByEmail(String email);
+    public Optional<Member> getMemberByEmail(String email);
  
 }
