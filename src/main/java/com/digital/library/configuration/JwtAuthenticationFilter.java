@@ -39,7 +39,7 @@ public Authentication attemptAuthentication(HttpServletRequest request,HttpServl
       return authenticationManager.authenticate(authenticationToken);       
     } 
     catch (Exception e) {
-        throw new RuntimeException(e);
+        throw new RuntimeException("Login failed due to incorrect username and password");
     }
 }
     @Override

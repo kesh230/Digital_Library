@@ -1,13 +1,9 @@
 package com.digital.library.configuration;
 
 import java.io.IOException;
-import java.security.Security;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -18,8 +14,11 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
+
 
 @Component
+@Slf4j
 public class JwtRequestFilter extends OncePerRequestFilter{
 
 private final JwtUtil jwtUtil;
@@ -41,11 +40,15 @@ throws ServletException,IOException{
     }
     if(username!=null && SecurityContextHolder.getContext().getAuthentication()==null 
              && jwtUtil.validateToken(token,username)){
-                UsernamePasswordAuthenticationToken authenticationToken=
+                log.info("validate token+++++++++++++ ");
+                               UsernamePasswordAuthenticationToken authenticationToken=
                         new UsernamePasswordAuthenticationToken(username,null,
                                   this.jwtUtil.getRolesFromToken(token));
-         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));                               
+               log.info("after validating token+++++++++++++ ");
+         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+         SecurityContextHolder.getContext().setAuthentication(authenticationToken);                               
         }
+        log.info("after and after validating token+++++++++++++ ");
         chain.doFilter(request, response);
 }
  

@@ -16,8 +16,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.With;
 
-@Getter
+ 
 @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -32,7 +33,7 @@ public class Member {
     private String lastName;
     private Long mobileNo;
     private String password;
-    private Role role;
+    private String role;
 
     @Email
     private String email;

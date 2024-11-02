@@ -2,7 +2,6 @@ package com.digital.library.util;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +50,10 @@ public class JwtUtil {
     public boolean isTokenExpired(String Token){
         return this.extractAllClaims(Token).getExpiration().before(new Date());
     }
+    public boolean validateToken(String token,UserDetails userDetails){
+        final String username=this.extractUsername(token);
+        return (username.equals(userDetails.getUsername())&& !this.isTokenExpired(token));
+    }
     public boolean validateToken(String token,String username){
         final String tokenUsername=this.extractUsername(token);
         return (tokenUsername.equals(username)&& !this.isTokenExpired(token));
@@ -60,7 +63,7 @@ public class JwtUtil {
     }
 
 
-    public Collection<SimpleGrantedAuthority> getRolesFromToken(String token) {
+    public List<SimpleGrantedAuthority> getRolesFromToken(String token) {
         Claims claims=extractAllClaims(token);
         return ((List<String>) claims.get("roles")).stream()
                     .map(SimpleGrantedAuthority::new).collect(Collectors.toList());
