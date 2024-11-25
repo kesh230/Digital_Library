@@ -40,15 +40,12 @@ throws ServletException,IOException{
     }
     if(username!=null && SecurityContextHolder.getContext().getAuthentication()==null 
              && jwtUtil.validateToken(token,username)){
-                log.info("validate token+++++++++++++ ");
                                UsernamePasswordAuthenticationToken authenticationToken=
                         new UsernamePasswordAuthenticationToken(username,null,
                                   this.jwtUtil.getRolesFromToken(token));
-               log.info("after validating token+++++++++++++ ");
          authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
          SecurityContextHolder.getContext().setAuthentication(authenticationToken);                               
         }
-        log.info("after and after validating token+++++++++++++ ");
         chain.doFilter(request, response);
 }
  
