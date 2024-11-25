@@ -30,15 +30,15 @@ public class SpringSecurityconfig {
 
     // Role based authentication
     // ADMIN-->Access every end points after login.
-    // MEMBER-->Members can only access "/book" endpoint.
-    // LIBRARIAN-->They can access all members or "/member" end point.
+    // MEMBER-->Members can access "/book" and "/issue" endpoint.
+    // LIBRARIAN-->They can access all members and issue end point.
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http.csrf(AbstractHttpConfigurer::disable);
-        http.authorizeHttpRequests(auth->auth.requestMatchers("/book/**","/member/**").hasAnyRole("ADMIN")
-                             .requestMatchers("/book/**").hasAnyRole("MEMBER","LIBRARIAN")
-                             .requestMatchers("/member/**").hasRole("LIBRARIAN")
+        http.authorizeHttpRequests(auth->auth.requestMatchers("/book/**","/member/**","/issue/**").hasAnyRole("ADMIN")
+                             .requestMatchers("/book/**","/issue/**").hasAnyRole("MEMBER")
+                             .requestMatchers("/member/**","issue/**").hasRole("LIBRARIAN")
                              .requestMatchers("/api/user/**","/auth/**","/oauth2/**").permitAll()  
                              .anyRequest().authenticated())
                              .oauth2Login(oauth2 -> oauth2
