@@ -10,7 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,12 +29,12 @@ public class IssueData {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private UUID id;
     
-    @OneToOne
+    @ManyToOne
     @NotNull
     @JsonIncludeProperties({"id","firstName","mobileNo"})
     private Member member;
     
-    @OneToOne
+    @ManyToOne
     @NotNull
     @JsonIncludeProperties({"id","name","author","price"})
     private Book book;
@@ -45,15 +45,6 @@ public class IssueData {
     private Instant expirationDate;
 
     private double amountPaid;
-    
-    // @JsonProperty
-    // public UUID getMemberid(){
-    //     return this.member.getId();
-    // }
-    // @JsonProperty
-    // public UUID getBookid(){
-    //     return this.book.getId();
-    // }
     
     @NotNull
     @Builder.Default
